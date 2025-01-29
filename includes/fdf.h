@@ -12,8 +12,9 @@
 
 #ifndef FDF_H
 # define FDF_H
-
-# include "../libft/libft.h"
+# if __has_include("../libft/libft.h")
+#  include "../libft/libft.h"
+# endif
 # include "../mlx/mlx.h"
 # include "struct.h"
 # include <fcntl.h>

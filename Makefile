@@ -3,6 +3,7 @@ CC = gcc
 CFLAGS = -Wall -Werror -Wextra
 MLX_PATH = ./mlx
 LIBFT_PATH = ./libft
+LIBFT_URL = https://github.com/Magazem/libft.git
 INCLUDES = -I$(MLX_PATH) -I$(LIBFT_PATH)
 
 SRCS = ./srcs/fdf.c \
@@ -17,6 +18,14 @@ all: $(NAME)
 
 %.o: %.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+
+$(LIBFT): $(LIBFTDIR)
+	@$(MAKE) --no-print-directory bonus -C $(LIBFTDIR)
+
+$(LIBFTDIR):
+	@echo "$(CYAN)Downloading libft...$(NORMAL)"
+	git clone -q $(LIBFT_URL) $(LIBFTDIR)
+	@echo "$(GREEN)Libft downloaded successfully$(NORMAL)"
 
 $(NAME): mlx $(OBJS) 
 	make -C $(LIBFT_PATH)
@@ -38,7 +47,7 @@ clean:
 
 fclean: clean
 	rm -f $(NAME)
-	make fclean -C $(LIBFT_PATH)
+	rm -rf ${LIBFT_PATH}
 	rm -rf ./mlx
 
 re: fclean all
